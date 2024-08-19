@@ -1,0 +1,269 @@
+Base URL
+http://localhost:8080/
+
+User Endpoints
+
+Get User by ID
+
+    Endpoint: GET /user/get
+
+    Description: Retrieve a user by their ID.
+
+    Request Parameters:
+        id (required, Long): The ID of the user to retrieve.
+
+    Request Example:
+
+    sql
+
+GET /user/get?id=123 HTTP/1.1
+Host: localhost:8080
+
+Response:
+
+    200 OK: The user details are returned in the response body.
+    404 Not Found: No user found with the provided ID.
+    500 Internal Server Error: An error occurred on the server.
+
+Response Example:
+
+json
+
+    {
+      "id": 123,
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com",
+      "address": "123 Main St, Anytown, USA"
+    }
+
+Create a New User
+
+    Endpoint: POST /user/add
+
+    Description: Add a new user to the system.
+
+    Request Body:
+        firstName (required, String): The user's first name.
+        lastName (required, String): The user's last name.
+        email (optional, String): The user's email address.
+        address (optional, String): The user's address.
+
+    Request Example:
+
+	POST /user/add HTTP/1.1
+	Host: localhost:8080
+	Content-Type: application/json
+
+	{
+	  "firstName": "Jane",
+	  "lastName": "Doe",
+	  "email": "jane.doe@example.com",
+	  "address": "456 Oak St, Anytown, USA"
+	}
+
+Response:
+
+    201 Created: The user was successfully created.
+    400 Bad Request: Invalid input data.
+    500 Internal Server Error: An error occurred on the server.
+
+Response Example:
+
+json
+
+    {
+      "id": 124,
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "email": "jane.doe@example.com",
+      "address": "456 Oak St, Anytown, USA"
+    }
+
+Update an Existing User
+
+    Endpoint: PUT /user/update
+
+    Description: Update an existing user's details.
+
+    Request Body:
+        id (required, Long): The ID of the user to update.
+        firstName (optional, String): The user's first name.
+        lastName (optional, String): The user's last name.
+        email (optional, String): The user's email address.
+        address (optional, String): The user's address.
+
+    Request Example:
+
+    json
+
+	PUT /user/update HTTP/1.1
+	Host: localhost:8080
+	Content-Type: application/json
+
+	{
+	  "id": 124,
+	  "firstName": "Jane",
+	  "lastName": "Doe",
+	  "email": "jane.doe@example.com",
+	  "address": "789 Pine St, Anytown, USA"
+	}
+
+Response:
+
+    201 Created: The user was successfully updated.
+    400 Bad Request: Invalid input data.
+    404 Not Found: No user found with the provided ID.
+    500 Internal Server Error: An error occurred on the server.
+
+Response Example:
+
+json
+
+    {
+      "id": 124,
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "email": "jane.doe@example.com",
+      "address": "789 Pine St, Anytown, USA",
+      "lastModifiedDate": "2024-08-11T12:00:00Z"
+    }
+
+Delete a User by ID
+
+    Endpoint: DELETE /user/delete
+
+    Description: Delete a user by their ID.
+
+    Request Parameters:
+        id (required, Long): The ID of the user to delete.
+
+    Request Example:
+
+    sql
+
+    DELETE /user/delete?id=123 HTTP/1.1
+    Host: localhost:8080
+
+    Response:
+        204 No Content: The user was successfully deleted.
+        404 Not Found: No user found with the provided ID.
+        500 Internal Server Error: An error occurred on the server.
+
+Account Endpoints
+Create a New Account
+
+    Endpoint: POST /account/add
+
+    Description: Add a new account for a user.
+
+    Request Body:
+        userId (required, Long): The ID of the user to associate with the account.
+        accountType (required, String): The type of the account (e.g., "savings", "checking").
+        balance (optional, Double): The initial balance of the account.
+
+    Request Example:
+
+    json
+
+	POST /account/add HTTP/1.1
+	Host: localhost:8080
+	Content-Type: application/json
+
+	{
+	  "userId": 124,
+	  "accountType": "savings",
+	  "balance": 1000.00
+	}
+
+Response:
+
+    201 Created: The account was successfully created.
+    400 Bad Request: Invalid input data.
+    500 Internal Server Error: An error occurred on the server.
+
+Response Example:
+
+json
+
+    {
+      "id": 456,
+      "userId": 124,
+      "accountType": "savings",
+      "balance": 1000.00
+    }
+
+Get Account by User ID
+
+    Endpoint: GET /account/get
+
+    Description: Retrieve the account details by the user ID.
+
+    Request Parameters:
+        id (required, Long): The ID of the user to retrieve the account details.
+
+    Request Example:
+
+    vbnet
+
+GET /account/get?id=124 HTTP/1.1
+Host: localhost:8080
+
+Response:
+
+    200 OK: The account details are returned in the response body.
+    404 Not Found: No account found for the provided user ID.
+    500 Internal Server Error: An error occurred on the server.
+
+Response Example:
+
+json
+
+    {
+      "id": 456,
+      "userId": 124,
+      "accountNumber":"111122223333",
+      "accountType": "savings",
+      "balance": 1000.00,
+      "user":	{
+	  "id": 124,
+	  "firstName": "Jane",
+	  "lastName": "Doe",
+	  "email": "jane.doe@example.com",
+	  "address": "789 Pine St, Anytown, USA"
+	}
+    },
+    {
+      "id": 457,
+      "userId": 124,
+      "accountNumber":"111122223334",
+      "accountType": "morgage",
+      "balance": 1000.00,
+      "user":	{
+	  "id": 124,
+	  "firstName": "Jane",
+	  "lastName": "Doe",
+	  "email": "jane.doe@example.com",
+	  "address": "789 Pine St, Anytown, USA"
+	}
+    }
+
+Error Handling
+
+The API returns the following error codes:
+
+    400 Bad Request: The request could not be understood or was missing required parameters.
+    404 Not Found: The requested resource could not be found.
+    500 Internal Server Error: An error occurred on the server.
+
+Error Response Example:
+
+json
+
+{
+  "timestamp": "2024-08-11T12:00:00Z",
+  "status": 404,
+  "error": "Not Found",
+  "message": "User not found",
+  "path": "/user/get"
+}
